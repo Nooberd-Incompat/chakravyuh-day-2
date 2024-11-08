@@ -1,4 +1,4 @@
-import 'package:chakravyuh/screens/home.dart';
+import 'package:chakravyuh/screens/team_id.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,13 +12,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Chakravyuh',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromARGB(255, 214, 145, 49)),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const TeamID(title: 'Team ID'),
     );
   }
 }
