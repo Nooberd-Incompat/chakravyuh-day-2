@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  crossword: ^1.3.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -59,7 +59,21 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+      - assets/images/abhimanyu.jpg
+      - assets/images/bheem.jpg
+      - assets/images/bhishma.jpg
+      - assets/images/arjun.jpeg
+      - assets/images/draupadi.jpg
+      - assets/images/dronacharya.jpg
+      - assets/images/duryodhan.jpg
+      - assets/images/dusanan.jpg
+      - assets/images/karna.jpeg
+      - assets/images/krishna.jpg
+      - assets/images/kunti.png
+      - assets/images/shakuni.jpg
+
+
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
