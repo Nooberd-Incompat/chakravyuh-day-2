@@ -64,6 +64,7 @@ class _TeamIDState extends State<TeamID> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
@@ -78,10 +79,14 @@ class _TeamIDState extends State<TeamID> {
               children: <Widget>[
                 const Text(
                   'Please enter your TeamID to proceed',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
+                  style: TextStyle(color: Colors.white),
                   controller: _teamIDController,
                   decoration: const InputDecoration(
                     labelText: 'Enter Team ID',

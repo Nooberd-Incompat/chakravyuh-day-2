@@ -45,7 +45,7 @@ class _CrosswordPageState extends State<CrosswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -66,15 +66,33 @@ class _CrosswordPageState extends State<CrosswordPage> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    Text(
-                      "The name of a major character in the Mahabharata",
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 147, 147, 147),
+                    Text.rich(
+                      TextSpan(
+                        text: "Who is the charioteer of Ar",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: "j", // Make the "j" italic
+                            style: const TextStyle(
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "una in the Mahabharata?",
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                       textAlign: TextAlign.center,
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -86,7 +104,7 @@ class _CrosswordPageState extends State<CrosswordPage> {
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
               ),
