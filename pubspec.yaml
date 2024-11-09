@@ -72,7 +72,11 @@ flutter:
       - assets/images/krishna.jpg
       - assets/images/kunti.png
       - assets/images/shakuni.jpg
-
+      - assets/images/weaponarjun.jpg
+      - assets/images/weaponbheem.jpg
+      - assets/images/weaponkrishna.jpg
+      - assets/images/weaponshakuni.jpg
+      
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

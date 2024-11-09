@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:chakravyuh/screens/image_screen.dart';
+import 'package:chakravyuh/screens/draggable_screen.dart';
 import 'package:crossword/crossword.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,7 @@ class CrosswordPage extends StatefulWidget {
   const CrosswordPage({super.key, required this.title});
 
   final String title;
+  
   @override
   State<CrosswordPage> createState() => _CrosswordPageState();
 }
@@ -15,7 +17,6 @@ class _CrosswordPageState extends State<CrosswordPage> {
   List<List<String>> letters = [];
   List<Color> lineColors = [];
   List<int> letterGrid = [11, 14];
-  GlobalKey<CrosswordState> crosswordState = GlobalKey<CrosswordState>();
   String word = "";
   bool isFirstWordGuessedCorrectly = false;
   bool isSecondWordGuessedCorrectly = false;
@@ -60,19 +61,13 @@ class _CrosswordPageState extends State<CrosswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      ),
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromARGB(255, 0, 0, 0),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Hint Section
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: Column(
@@ -82,7 +77,7 @@ class _CrosswordPageState extends State<CrosswordPage> {
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -106,7 +101,7 @@ class _CrosswordPageState extends State<CrosswordPage> {
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Color.fromARGB(255, 159, 104, 241),
                   ),
                 ),
               ),
@@ -119,7 +114,6 @@ class _CrosswordPageState extends State<CrosswordPage> {
                     onTouchLetterFontStyle: FontStyle.italic,
                   ),
                   revealLetterDecoration: const RevealLetterDecoration(shakeOffset: Offset(10, 20)),
-                  key: crosswordState,
                   allowOverlap: false,
                   letters: const [
                     ["S", "A", "M", "R", "N", "I", "G", "K", "P", "U", "H", "T"],
@@ -144,7 +138,7 @@ class _CrosswordPageState extends State<CrosswordPage> {
                   },
                   addIncorrectWord: false,
                   textStyle: const TextStyle(
-                    color: Color.fromARGB(255, 185, 51, 41),
+                    color: Color.fromARGB(255, 182, 134, 255),
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -170,20 +164,23 @@ class _CrosswordPageState extends State<CrosswordPage> {
               ),
               // Next Button Section (Visible from the start, but enabled only if both words are guessed correctly)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.symmetric(vertical: 50),
                 child: ElevatedButton(
                   onPressed: isFirstWordGuessedCorrectly && isSecondWordGuessedCorrectly
                       ? () {
                           // Navigate to ImageGridScreen
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ImageGridScreen(title:"AVATARS")),
+                            MaterialPageRoute(builder: (context) => DraggableScreen()),
                           );
                         }
                       : null, // Disabled initially until both words are correct
                   child: const Text('Next'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 255, 186, 96),
+                    backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8), 
+                    ),
                   ),
                 ),
               ),

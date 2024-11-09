@@ -15,11 +15,7 @@ class _InstructionScreenState extends State<InstructionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      ),
+      backgroundColor: Colors.black87, // Dark background color for dark theme
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -29,6 +25,7 @@ class _InstructionScreenState extends State<InstructionScreen> {
               Card(
                 elevation: 8,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                color: Colors.grey[800], // Dark card color
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: Column(
@@ -36,13 +33,13 @@ class _InstructionScreenState extends State<InstructionScreen> {
                     children: const [
                       Text(
                         'Welcome to the Quiz!',
-                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white), // White text for dark background
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 10),
                       Text(
                         'Please read the instructions carefully before proceeding:',
-                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                        style: TextStyle(fontSize: 16, color: Colors.white70), // Light color text
                         textAlign: TextAlign.left,
                       ),
                       SizedBox(height: 20),
@@ -50,7 +47,7 @@ class _InstructionScreenState extends State<InstructionScreen> {
                         '1. Each question has a time limit.\n'
                         '2. You cannot go back to previous questions.\n'
                         '3. Try to answer each question within the given time.',
-                        style: TextStyle(fontSize: 16, height: 1.4, color: Colors.black54),
+                        style: TextStyle(fontSize: 16, height: 1.4, color: Colors.white60), // Lighter color text
                         textAlign: TextAlign.left,
                       ),
                     ],
@@ -59,8 +56,8 @@ class _InstructionScreenState extends State<InstructionScreen> {
               ),
               const SizedBox(height: 30),
               NextButton(
-              nextScreen: QuestionScreen(title:"Question"),
-            ),
+                nextScreen: QuestionScreen(title:"Question"),
+              ),
             ],
           ),
         ),
@@ -68,5 +65,3 @@ class _InstructionScreenState extends State<InstructionScreen> {
     );
   }
 }
-
-

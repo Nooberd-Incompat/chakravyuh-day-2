@@ -5,6 +5,7 @@ class QuestionScreen extends StatefulWidget {
   const QuestionScreen({super.key, required this.title});
 
   final String title;
+
   @override
   State<QuestionScreen> createState() => _QuestionScreenState();
 }
@@ -24,7 +25,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
       // Navigate to another screen if the answer is correct
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const CrosswordPage(title:"CROSSWORD")), // Replace with your target screen
+        MaterialPageRoute(builder: (context) => const CrosswordPage(title: "CROSSWORD")), // Replace with your target screen
       );
     } else {
       // Show a dialog if the answer is incorrect
@@ -47,22 +48,21 @@ class _QuestionScreenState extends State<QuestionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      ),
+      backgroundColor: Color(0xFF121212), // Dark gray background (not pure black)
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            const SizedBox(height: 100), // Adjust space at the top
+
+            // Card for the question
             Card(
-              elevation: 6,
+              elevation: 8,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
               ),
-              color: Color.fromARGB(255, 248, 224, 209),
+              color: Color(0xFF2A2A2A), // Slightly lighter dark color
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: Column(
@@ -73,39 +73,48 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 246, 189, 115),
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 5.0,
+                            color: Color(0xFFD4D2D2),
+                            offset: Offset(0, 0),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(height: 16),
                     Text(
                       'Who was the eldest Pandava?',
-                      style: TextStyle(fontSize: 22, color: Color.fromARGB(221, 2, 2, 2)),
+                      style: TextStyle(fontSize: 22, color: Colors.white70),
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 10),
+
+            // List of options
             Expanded(
               child: ListView.builder(
                 itemCount: options.length,
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () => _handleOptionSelected(index),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
-                      color: _selectedOption == index ? Color.fromARGB(255, 248, 224, 209) : Colors.white,
+                      color: _selectedOption == index ? Color(0xFF333333) : Color(0xFF1E1E1E), // Darker option colors
                       border: Border.all(
-                        color: _selectedOption == index ? const Color.fromARGB(255, 246, 189, 115) : Colors.grey.shade300,
+                        color: _selectedOption == index ? Color.fromARGB(255, 182, 134, 255) : Color(0xFF444444),
                         width: 2,
                       ),
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
+                          color: Colors.grey.withOpacity(0.4),
                           spreadRadius: 1,
-                          blurRadius: 6,
+                          blurRadius: 8,
                           offset: const Offset(0, 3),
                         ),
                       ],
@@ -115,7 +124,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: _selectedOption == index ? const Color.fromARGB(255, 246, 189, 115): Colors.black87,
+                        color: _selectedOption == index ? Colors.white : Colors.white70, // Light text
                       ),
                     ),
                   ),
@@ -123,17 +132,20 @@ class _QuestionScreenState extends State<QuestionScreen> {
               ),
             ),
             const SizedBox(height: 10),
+
+            // Next button
             Center(
               child: ElevatedButton(
                 onPressed: _checkAnswer,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 255, 186, 96),
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  backgroundColor: Color.fromARGB(255, 255, 255, 255), // Soft amber button color
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 ),
-                child: const Text('Next', style: TextStyle(fontSize: 18)),
+                child: const Text('Next', style: TextStyle(fontSize: 18, color: Colors.black87)),
               ),
             ),
+            const SizedBox(height: 80),
           ],
         ),
       ),
