@@ -1,6 +1,6 @@
-import 'package:chakravyuh/screens/end_screen.dart';
+import 'package:chakravyuh/screens/instruction_screen.dart';
+import 'package:chakravyuh/screens/pattern_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:chakravyuh/screens/floating_text_screen.dart';
 
 class StartScreen extends StatelessWidget {
   final int n;
@@ -43,7 +43,7 @@ class StartScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const EndScreen(),
+                    builder: (context) => const InstructionScreen(),
                   ),
                 );
               },

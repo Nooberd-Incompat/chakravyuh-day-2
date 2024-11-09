@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:chakravyuh/screens/instruction_screen.dart';
+import 'package:chakravyuh/screens/question_screen.dart';
 import 'package:chakravyuh/widgets/next_button.dart';
 import 'package:flutter/material.dart';
 
@@ -267,8 +268,7 @@ class _FloatingTextScreenState extends State<FloatingTextScreen>
             alignment: Alignment.bottomCenter, // Changed to bottomCenter
             child: Padding(
               padding: EdgeInsets.only(bottom: 32.0), // Added bottom padding
-              child: NextButton(
-                  nextScreen: InstructionScreen(title: "Instructions")),
+              child: NextButton(nextScreen: QuestionScreen(title: "Question")),
             ),
           ),
         ],
