@@ -35,6 +35,7 @@ class _ImageGridScreenState extends State<ImageGridScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title, style: const TextStyle(fontWeight: FontWeight.bold)),
       ),
