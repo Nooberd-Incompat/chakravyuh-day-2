@@ -1,5 +1,7 @@
+import 'package:chakravyuh/screens/floating_text_screen.dart';
+import 'package:chakravyuh/screens/next_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:chakravyuh/screens/instruction_screen.dart';
+import 'package:chakravyuh/screens/start_screen.dart';
 import 'package:chakravyuh/widgets/next_button.dart';
 
 class TeamID extends StatefulWidget {
@@ -12,7 +14,6 @@ class TeamID extends StatefulWidget {
 }
 
 class _TeamIDState extends State<TeamID> {
-  bool isButtonEnabled = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,13 +21,12 @@ class _TeamIDState extends State<TeamID> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             NextButton(
-              nextScreen: const InstructionScreen(title: "Instruction Page"),
-              isEnabled: isButtonEnabled,
+              nextScreen: StartScreen(),
             ),
           ],
         ),

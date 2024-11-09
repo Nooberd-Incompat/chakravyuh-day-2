@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 class NextButton extends StatelessWidget {
   final Widget nextScreen;
-  final bool isEnabled;
-
-  const NextButton({super.key, required this.nextScreen, this.isEnabled = false});
+  const NextButton({super.key, required this.nextScreen});
 
   void _navigateToNextScreen(BuildContext context) {
     Navigator.push(
@@ -15,20 +13,22 @@ class NextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        onPressed: isEnabled ? () => _navigateToNextScreen(context) : null,
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-          backgroundColor: isEnabled ? const Color.fromARGB(255, 246, 189, 115) : Colors.grey,
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10), 
-          ),
+    return TextButton(
+      onPressed: () => _navigateToNextScreen(context),
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+        backgroundColor: const Color(0xFFF5E6D3), // Cream color
+        shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(8.0), // Optional: adds rounded corners
         ),
-        child: const Text(
-          "Next",
-          style: TextStyle(fontSize: 18),
+      ),
+      child: const Text(
+        "Next",
+        style: TextStyle(
+          color: Color(0xFF8B4513), // Brown color for text
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
