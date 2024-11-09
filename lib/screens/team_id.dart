@@ -1,5 +1,6 @@
 import 'package:chakravyuh/screens/floating_text_screen.dart';
 import 'package:chakravyuh/screens/next_screen.dart';
+import 'package:chakravyuh/screens/start_screen.dart';
 import 'package:chakravyuh/widgets/next_button.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,7 @@ class _TeamIDState extends State<TeamID> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             NextButton(
-              nextScreen: FloatingTextScreen(),
+              nextScreen: StartScreen(),
             ),
           ],
         ),
