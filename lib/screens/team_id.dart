@@ -3,6 +3,8 @@ import 'package:chakravyuh/screens/start_screen.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+int? n;
+
 class TeamID extends StatefulWidget {
   const TeamID({super.key, required this.title});
 
@@ -16,7 +18,6 @@ class _TeamIDState extends State<TeamID> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _teamIDController = TextEditingController();
   String teamID = '';
-  int? n;
   Map<String, int> teamData = {};
 
   @override
