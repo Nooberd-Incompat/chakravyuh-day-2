@@ -12,7 +12,6 @@ class InstructionScreen extends StatefulWidget {
 }
 
 class _InstructionScreenState extends State<InstructionScreen> {
-  bool isButtonEnabled = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +59,6 @@ class _InstructionScreenState extends State<InstructionScreen> {
               const SizedBox(height: 30),
               NextButton(
               nextScreen: QuestionScreen(title:"Question"),
-              isEnabled: isButtonEnabled,
             ),
             ],
           ),

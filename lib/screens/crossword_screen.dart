@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:chakravyuh/screens/image_screen.dart';
-import 'package:chakravyuh/widgets/next_button.dart';
 import 'package:crossword/crossword.dart';
 import 'package:flutter/material.dart';
 
@@ -170,10 +169,21 @@ class _CrosswordPageState extends State<CrosswordPage> {
               ),
               // Next Button Section (Visible from the start, but enabled only if both words are guessed correctly)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 100,vertical: 20),
-                  child: NextButton(
-                    nextScreen: ImageGridScreen(title: "AVATARS"),
-                    isEnabled: isFirstWordGuessedCorrectly && isSecondWordGuessedCorrectly,
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: ElevatedButton(
+                  onPressed: isFirstWordGuessedCorrectly && isSecondWordGuessedCorrectly
+                      ? () {
+                          // Navigate to ImageGridScreen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ImageGridScreen(title:"AVATARS")),
+                          );
+                        }
+                      : null, // Disabled initially until both words are correct
+                  child: const Text('Next'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 255, 186, 96),
+                  ),
                 ),
               ),
             ],

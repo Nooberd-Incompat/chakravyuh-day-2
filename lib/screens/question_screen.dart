@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:chakravyuh/screens/crossword_screen.dart'; // Assuming this is your next screen
-import 'package:chakravyuh/widgets/next_button.dart'; // Import NextButton widget
 
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({super.key, required this.title});
@@ -22,11 +21,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   void _checkAnswer() {
     if (_selectedOption == correctAnswerIndex) {
+      // Navigate to another screen if the answer is correct
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const CrosswordPage(title: "CROSSWORD")),
+        MaterialPageRoute(builder: (context) => const CrosswordPage(title:"CROSSWORD")), // Replace with your target screen
       );
     } else {
+      // Show a dialog if the answer is incorrect
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -113,7 +114,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: _selectedOption == index ? const Color.fromARGB(255, 246, 189, 115) : Colors.black87,
+                        color: _selectedOption == index ? const Color.fromARGB(255, 246, 189, 115): Colors.black87,
                       ),
                     ),
                   ),
@@ -122,9 +123,14 @@ class _QuestionScreenState extends State<QuestionScreen> {
             ),
             const SizedBox(height: 10),
             Center(
-              child: NextButton(
-                nextScreen: const CrosswordPage(title: "CROSSWORD"),
-                isEnabled: _selectedOption == correctAnswerIndex,
+              child: ElevatedButton(
+                onPressed: _checkAnswer,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 255, 186, 96),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                child: const Text('Next', style: TextStyle(fontSize: 18)),
               ),
             ),
           ],
