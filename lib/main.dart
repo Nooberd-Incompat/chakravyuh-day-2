@@ -1,6 +1,8 @@
 import 'package:chakravyuh/screens/team_id.dart';
 import 'package:flutter/material.dart';
 
+String id = "";
+
 void main() {
   runApp(const MyApp());
 }

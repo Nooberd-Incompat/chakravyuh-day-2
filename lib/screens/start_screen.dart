@@ -1,8 +1,10 @@
-import 'package:chakravyuh/screens/floating_text_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:chakravyuh/screens/floating_text_screen.dart';
 
 class StartScreen extends StatelessWidget {
-  const StartScreen({super.key});
+  final int n;
+
+  const StartScreen({super.key, required this.n});
 
   @override
   Widget build(BuildContext context) {
@@ -10,9 +12,8 @@ class StartScreen extends StatelessWidget {
       backgroundColor: Colors.black,
       body: Center(
         child: Column(
-          mainAxisSize: MainAxisSize.min, // Centers the content vertically
+          mainAxisSize: MainAxisSize.min,
           children: [
-            // Centered heading text
             const Text(
               'Chakravyuh',
               style: TextStyle(
@@ -20,19 +21,29 @@ class StartScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
-              textAlign:
-                  TextAlign.center, // Centers text within the screen width
+              textAlign: TextAlign.center,
             ),
-            const SizedBox(
-                height: 20), // Spacing between heading and widget below
+            const SizedBox(height: 20),
 
-            // Widget below the heading, replace with any custom widget
+            // Display dynamic +n
+            Text(
+              '+$n',
+              style: const TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const FloatingTextScreen()),
+                    builder: (context) => const FloatingTextScreen(),
+                  ),
                 );
               },
               style: ElevatedButton.styleFrom(
