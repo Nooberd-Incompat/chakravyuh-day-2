@@ -1,5 +1,5 @@
+import 'package:chakravyuh/screens/floating_text_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:chakravyuh/screens/crossword_screen.dart'; // Assuming this is your next screen
 
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({super.key, required this.title});
@@ -27,7 +27,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                const CrosswordPage()), // Replace with your target screen
+                const FloatingTextScreen()), // Replace with your target screen
       );
     } else {
       // Show a dialog if the answer is incorrect
