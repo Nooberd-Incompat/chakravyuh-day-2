@@ -1,3 +1,5 @@
+import 'package:chakravyuh/screens/notes_screen.dart';
+import 'package:chakravyuh/widgets/next_button.dart';
 import 'package:flutter/material.dart';
 
 class DraggableScreen extends StatefulWidget {
@@ -6,173 +8,176 @@ class DraggableScreen extends StatefulWidget {
 }
 
 class _DraggableScreenState extends State<DraggableScreen> {
-  final List<Map<String, String>> sentenceWords = [
-    {'word': 'Mahabharat', 'code': ''},
-    {'word': 'is', 'code': ''},
-    {'word': 'an', 'code': ''},
-    {'word': 'epic', 'code': ''},
-    {'word': 'story', 'code': ''},
-    {'word': 'from', 'code': ''},
-    {'word': 'India', 'code': 'K'}, // Special case for 'India'
-    {'word': 'about', 'code': ''},
-    {'word': 'the', 'code': ''},
-    {'word': 'Kurukshetra', 'code': ''},
-  ];
+  List<LetterBox> letterBoxes = [];
+  bool isSDragged = false;
 
-  final Map<String, bool> wordRevealed = {};
-  bool showNextButton = false; // Control the visibility of the "Next" button
+  @override
+  void initState() {
+    super.initState();
+
+    const letters = ['BHEEM', 'ARJUN', 'KRISHNA', 'BHEESMA', 'KARNA', 'DURYODHAN'];
+
+    int maxLength = letters.map((e) => e.length).reduce((a, b) => a > b ? a : b);
+
+    letterBoxes = List.generate(letters.length, (index) {
+      return LetterBox(
+        id: index,
+        letter: letters[index],
+        isKey: letters[index] == 'BHEESMA',
+        width: maxLength * 30.0,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double boxHeight = 60.0;
+    const double spacing = 10.0;
+    int lettersPerRow = 1;
+    double totalWidth = (letterBoxes[0].width * lettersPerRow) + (spacing * (lettersPerRow - 1));
+    double xOffset = (screenWidth - totalWidth) / 2;
+    double yOffset = 50.0;
+
+    for (int i = 0; i < letterBoxes.length; i++) {
+      double x = xOffset;
+      double y = yOffset + i * (boxHeight + spacing);
+      letterBoxes[i].position = Offset(x, y);
+    }
+
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 25),
-            const Text(
-              'Drag and Drop the Words to Reveal Their Hidden Code!',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 255, 255, 255)),
-            ),
-            const SizedBox(height: 20),
-            
-            // Non-scrollable draggable words with Wrap
-            Wrap(
-              spacing: 8.0,
-              runSpacing: 8.0,
-              children: sentenceWords.map((wordData) {
-                String word = wordData['word']!;
-                String code = wordData['code']!;
-                return Draggable<String>(
-                  data: code,
-                  child: _buildDraggableWord(word, isFeedback: false),
-                  feedback: _buildDraggableWord(word, isFeedback: true),
-                  childWhenDragging: Container(),
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 20),
+      backgroundColor: Colors.black,
+      body: Column(
+        children: [
+          SizedBox(height: 100),
 
-            const Text(
-              'Drop the words in the correct zones below to reveal the hidden letter code.',
-              style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 133, 132, 132)),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'The one who stood still for his vow will guide you forward',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 10),
+          ),
 
-            // Scrollable drop zones
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 15,
-                  crossAxisSpacing: 15,
-                  childAspectRatio: 3,
-                ),
-                itemCount: sentenceWords.length,
-                itemBuilder: (context, index) {
-                  String word = sentenceWords[index]['word']!;
-                  String code = sentenceWords[index]['code']!;
+          SizedBox(height: 50),
 
-                  return DragTarget<String>(
-                    onAccept: (receivedCode) {
-                      if (receivedCode == code) {
-                        setState(() {
-                          wordRevealed[word] = true;
-                          if (word == 'India') {
-                            showNextButton = true; // Show "Next" button after "India" is revealed
-                          }
-                        });
-                      }
-                    },
-                    builder: (context, acceptedItems, rejectedItems) {
-                      return Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 251, 251, 251),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              word,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
+          Expanded(
+            child: Stack(
+              children: [
+                ...letterBoxes.map((box) {
+                  return Positioned(
+                    top: box.position.dy,
+                    left: box.position.dx,
+                    child: Draggable<LetterBox>(
+                      data: box,
+                      feedback: Material(
+                        color: Colors.transparent,
+                        child: Container(
+                          width: box.width,
+                          height: boxHeight,
+                          color: Colors.purple,
+                          child: Center(
+                            child: Text(
+                              box.letter,
+                              style: TextStyle(fontSize: 20, color: Colors.white),
                             ),
-                            const SizedBox(width: 8),
-                            if (wordRevealed[word] == true)
-                              Text(
-                                sentenceWords[index]['code']!,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 58, 141, 137),
-                                ),
-                              ),
-                          ],
+                          ),
                         ),
-                      );
-                    },
+                      ),
+                      childWhenDragging: Container(
+                        width: box.width,
+                        height: boxHeight,
+                        color: Colors.grey,
+                      ),
+                      onDragStarted: () {
+                        if (box.letter == 'BHEESMA') {
+                          setState(() {
+                            isSDragged = true;
+                          });
+                        }
+                      },
+                      onDragEnd: (_) {
+                        if (box.letter == 'BHEESMA') {
+                          setState(() {
+                            isSDragged = false;
+                          });
+                        }
+                      },
+                      child: Container(
+                        width: box.width,
+                        height: boxHeight,
+                        color: Color.fromARGB(255, 86, 28, 145),
+                        child: Center(
+                          child: Text(
+                            box.letter,
+                            style: TextStyle(fontSize: 25, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      onDraggableCanceled: (velocity, offset) {
+                        setState(() {
+                          box.position = offset;
+                        });
+                      },
+                    ),
                   );
-                },
-              ),
+                }).toList(),
+
+                if (isSDragged)
+                  Positioned(
+                    top: letterBoxes[3].position.dy,
+                    left: letterBoxes[3].position.dx,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NotesScreen()), // Navigate to NotesScreen
+                        );
+                      },
+                      child: Text(
+                        'b',
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Color.fromARGB(255, 83, 2, 86),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
             ),
-            const SizedBox(height: 10),
+          ),
 
-            // Conditionally display the "Next" button
-            if (showNextButton)
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Define what happens when "Next" is pressed
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Proceeding to the next step!')),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple, // Button color
-                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  ),
-                  child: const Text(
-                    'Next',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
+          SizedBox(height: 20), // Add space for the button
 
-  Widget _buildDraggableWord(String word, {bool isFeedback = false}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      margin: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        color: isFeedback ? Colors.yellow.withOpacity(0.8) : Colors.orange,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          const BoxShadow(
-            color: Colors.black26,
-            offset: Offset(2, 2),
-            blurRadius: 5,
+          // Add the NextButton here
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: NextButton(nextScreen: NotesScreen()),  
           ),
         ],
       ),
-      child: Text(
-        word,
-        style: const TextStyle(
-          fontSize: 16,
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
     );
   }
+}
+
+class LetterBox {
+  final int id;
+  final String letter;
+  final bool isKey;
+  final double width;
+  Offset position;
+
+  LetterBox({
+    required this.id,
+    required this.letter,
+    required this.isKey,
+    required this.width,
+    Offset? position,
+  }) : position = position ?? Offset(100.0, 100.0);
 }

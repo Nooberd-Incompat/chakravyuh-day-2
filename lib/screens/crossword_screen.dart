@@ -1,14 +1,11 @@
 import 'dart:math';
 import 'package:chakravyuh/screens/image_screen.dart';
-import 'package:chakravyuh/screens/draggable_screen.dart';
 import 'package:crossword/crossword.dart';
 import 'package:flutter/material.dart';
 
 class CrosswordPage extends StatefulWidget {
-  const CrosswordPage({super.key, required this.title});
+  const CrosswordPage({super.key});
 
-  final String title;
-  
   @override
   State<CrosswordPage> createState() => _CrosswordPageState();
 }
@@ -16,19 +13,10 @@ class CrosswordPage extends StatefulWidget {
 class _CrosswordPageState extends State<CrosswordPage> {
   List<List<String>> letters = [];
   List<Color> lineColors = [];
-  List<int> letterGrid = [11, 14];
+  List<int> letterGrid = [10, 10]; // Updated grid size to 10x10
+  GlobalKey<CrosswordState> crosswordState = GlobalKey<CrosswordState>();
   String word = "";
   bool isFirstWordGuessedCorrectly = false;
-  bool isSecondWordGuessedCorrectly = false;
-
-  List<List<String>> generateRandomLetters() {
-    final random = Random();
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    return List.generate(
-      letterGrid.first,
-      (_) => List.generate(letterGrid.last, (_) => letters[random.nextInt(letters.length)]),
-    );
-  }
 
   Color generateRandomColor() {
     Random random = Random();
@@ -45,15 +33,11 @@ class _CrosswordPageState extends State<CrosswordPage> {
   }
 
   void checkGuess(String guessedWord) {
-    if (guessedWord.toUpperCase() == "ARJUN" && !isFirstWordGuessedCorrectly) {
+    if (guessedWord.toUpperCase() == "KRISHNA" &&
+        !isFirstWordGuessedCorrectly) {
       setState(() {
         word = guessedWord;
         isFirstWordGuessedCorrectly = true;
-      });
-    } else if (guessedWord.toUpperCase() == "DRAUPADI" && !isSecondWordGuessedCorrectly) {
-      setState(() {
-        word = guessedWord;
-        isSecondWordGuessedCorrectly = true;
       });
     }
   }
@@ -61,14 +45,15 @@ class _CrosswordPageState extends State<CrosswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
+              // Hint Section
+              const Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: Column(
                   children: [
@@ -77,19 +62,37 @@ class _CrosswordPageState extends State<CrosswordPage> {
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    Text(
-                      "Two major characters of Mahabharat",
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 147, 147, 147),
+                    Text.rich(
+                      TextSpan(
+                        text: "Who is the charioteer of Ar",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: "j", // Make the "j" italic
+                            style: const TextStyle(
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "una in the Mahabharata?",
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                       textAlign: TextAlign.center,
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -101,11 +104,11 @@ class _CrosswordPageState extends State<CrosswordPage> {
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 159, 104, 241),
+                    color: Colors.white,
                   ),
                 ),
               ),
-              // Crossword Grid Section
+              // Crossword Grid Section (10x10 Grid)
               Expanded(
                 child: Crossword(
                   letterPopDecoration: const LetterPopDecoration(
@@ -113,32 +116,35 @@ class _CrosswordPageState extends State<CrosswordPage> {
                     duration: Duration(milliseconds: 200),
                     onTouchLetterFontStyle: FontStyle.italic,
                   ),
-                  revealLetterDecoration: const RevealLetterDecoration(shakeOffset: Offset(10, 20)),
+                  revealLetterDecoration:
+                      const RevealLetterDecoration(shakeOffset: Offset(10, 20)),
+                  key: crosswordState,
                   allowOverlap: false,
                   letters: const [
-                    ["S", "A", "M", "R", "N", "I", "G", "K", "P", "U", "H", "T"],
-                    ["U", "K", "A", "U", "I", "S", "A", "N", "R", "J", "P", "L"],
-                    ["R", "N", "J", "B", "A", "U", "M", "O", "D", "E", "L", "A"],
-                    ["N", "R", "D", "A", "Y", "R", "D", "K", "E", "A", "N", "I"],
-                    ["A", "R", "O", "T", "N", "S", "R", "I", "J", "P", "D", "Y"],
-                    ["L", "T", "A", "M", "K", "R", "A", "R", "U", "A", "R", "D"],
-                    ["A", "V", "A", "S", "U", "B", "U", "A", "D", "A", "V", "P"],
-                    ["H", "K", "R", "M", "E", "I", "P", "N", "A", "H", "A", "C"],
-                    ["A", "A", "K", "R", "D", "M", "A", "G", "H", "U", "N", "Y"],
-                    ["A", "H", "R", "I", "T", "S", "D", "D", "B", "N", "Y", "O"],
-                    ["B", "H", "R", "E", "T", "A", "I", "L", "E", "S", "T", "M"]
+                    ["T", "H", "F", "P", "S", "M", "G", "Q", "A", "L"],
+                    ["K", "R", "I", "S", "H", "N", "A", "Z", "D", "P"],
+                    ["F", "O", "L", "A", "V", "C", "O", "T", "E", "X"],
+                    ["L", "D", "P", "Q", "Y", "O", "R", "B", "J", "N"],
+                    ["E", "T", "A", "I", "Z", "K", "W", "U", "C", "L"],
+                    ["O", "C", "N", "F", "I", "R", "R", "S", "Q", "A"],
+                    ["G", "Y", "D", "W", "A", "J", "I", "E", "M", "O"],
+                    ["W", "R", "B", "J", "L", "T", "V", "P", "F", "D"],
+                    ["X", "M", "L", "E", "W", "D", "S", "Z", "K", "Q"],
+                    ["P", "B", "F", "A", "H", "Y", "L", "O", "J", "R"]
                   ],
                   spacing: const Offset(30, 30),
-                  onLineUpdate: (String guessedWord, List<String> words, bool isLineDrawn) {
+                  onLineUpdate: (String guessedWord, List<String> words,
+                      bool isLineDrawn) {
                     if (isLineDrawn) {
-                      checkGuess(guessedWord);
+                      checkGuess(
+                          guessedWord); // Check if the guessed word is correct
                     } else {
                       setState(() => word = guessedWord);
                     }
                   },
-                  addIncorrectWord: false,
+                  addIncorrectWord: true,
                   textStyle: const TextStyle(
-                    color: Color.fromARGB(255, 182, 134, 255),
+                    color: Color.fromARGB(255, 185, 51, 41),
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -157,30 +163,27 @@ class _CrosswordPageState extends State<CrosswordPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  hints: const [
-                    "ARJUN", "DRAUPADI" // Add more hints here if needed
-                  ],
+                  hints: const [""],
                 ),
               ),
-              // Next Button Section (Visible from the start, but enabled only if both words are guessed correctly)
+              // Next Button Section (Visible from the start, but enabled only if the word is guessed correctly)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 50),
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 child: ElevatedButton(
-                  onPressed: isFirstWordGuessedCorrectly && isSecondWordGuessedCorrectly
+                  onPressed: isFirstWordGuessedCorrectly
                       ? () {
                           // Navigate to ImageGridScreen
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => DraggableScreen()),
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ImageGridScreen(title: "AVATARS")),
                           );
                         }
-                      : null, // Disabled initially until both words are correct
+                      : null, // Disabled initially until the word "KRISHNA" is guessed
                   child: const Text('Next'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8), 
-                    ),
+                    backgroundColor: Color.fromARGB(255, 255, 186, 96),
                   ),
                 ),
               ),
