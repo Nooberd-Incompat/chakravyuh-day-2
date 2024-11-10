@@ -13,8 +13,7 @@ class CrosswordPage extends StatefulWidget {
 class _CrosswordPageState extends State<CrosswordPage> {
   List<List<String>> letters = [];
   List<Color> lineColors = [];
-  List<int> letterGrid = [10, 10]; // Updated grid size to 10x10
-  GlobalKey<CrosswordState> crosswordState = GlobalKey<CrosswordState>();
+
   String word = "";
   bool isFirstWordGuessedCorrectly = false;
 
@@ -45,15 +44,13 @@ class _CrosswordPageState extends State<CrosswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Hint Section
-              const Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: Column(
                   children: [
@@ -104,7 +101,6 @@ class _CrosswordPageState extends State<CrosswordPage> {
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
                   ),
                 ),
               ),
@@ -116,9 +112,6 @@ class _CrosswordPageState extends State<CrosswordPage> {
                     duration: Duration(milliseconds: 200),
                     onTouchLetterFontStyle: FontStyle.italic,
                   ),
-                  revealLetterDecoration:
-                      const RevealLetterDecoration(shakeOffset: Offset(10, 20)),
-                  key: crosswordState,
                   allowOverlap: false,
                   letters: const [
                     ["T", "H", "F", "P", "S", "M", "G", "Q", "A", "L"],
@@ -175,9 +168,6 @@ class _CrosswordPageState extends State<CrosswordPage> {
                           // Navigate to ImageGridScreen
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ImageGridScreen(title: "AVATARS")),
                           );
                         }
                       : null, // Disabled initially until the word "KRISHNA" is guessed
