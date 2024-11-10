@@ -3,9 +3,7 @@ import 'package:chakravyuh/widgets/next_button.dart';
 import 'package:flutter/material.dart';
 
 class InstructionScreen extends StatefulWidget {
-  const InstructionScreen({super.key, required this.title});
-
-  final String title;
+  const InstructionScreen({super.key});
 
   @override
   State<InstructionScreen> createState() => _InstructionScreenState();
@@ -15,7 +13,7 @@ class _InstructionScreenState extends State<InstructionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black87, // Dark background color for dark theme
+      backgroundColor: Colors.black,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -24,39 +22,47 @@ class _InstructionScreenState extends State<InstructionScreen> {
             children: <Widget>[
               Card(
                 elevation: 8,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                color: Colors.grey[800], // Dark card color
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                child: const Padding(
+                  padding: EdgeInsets.all(24.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
-                        'Welcome to the Quiz!',
-                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white), // White text for dark background
+                        'Before the games begin...',
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Please read the instructions carefully before proceeding:',
-                        style: TextStyle(fontSize: 16, color: Colors.white70), // Light color text
+                        "In this stage, just like Arjuna never let his aim falter on the battlefield of Kurukshetra, it's time for you to focus and keep your eyes sharp. \n Beware of the letter trickery — not all is as it seems! Words may appear as deceptive as the illusions created by Duryodhana, but with the wisdom of Krishna guiding your mind, you'll spot the right ones! \n So, channel your inner Pandava, outsmart the puzzles, and uncover the secret key that awaits.\n May the letters align in your favor, and remember — even Draupadi had to play her cards wisely!\n Like how the Kauravs recieved the army of Krishna, we provide you with the first letter of your crusade!\nMay you be victorious\n",
+                        style: TextStyle(
+                            fontSize: 16, height: 1.4, color: Colors.black54),
                         textAlign: TextAlign.left,
                       ),
-                      SizedBox(height: 20),
-                      Text(
-                        '1. Each question has a time limit.\n'
-                        '2. You cannot go back to previous questions.\n'
-                        '3. Try to answer each question within the given time.',
-                        style: TextStyle(fontSize: 16, height: 1.4, color: Colors.white60), // Lighter color text
-                        textAlign: TextAlign.left,
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "\"c\"",
+                            style: TextStyle(
+                                fontSize: 40,
+                                height: 1.4,
+                                color: Colors.black54),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
               ),
               const SizedBox(height: 30),
-              NextButton(
-                nextScreen: QuestionScreen(title:"Question"),
+              const NextButton(
+                nextScreen: QuestionScreen(title: "Question"),
               ),
             ],
           ),
