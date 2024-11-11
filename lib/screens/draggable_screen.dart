@@ -9,14 +9,12 @@ class DraggableScreen extends StatefulWidget {
 
 class _DraggableScreenState extends State<DraggableScreen> {
   List<LetterBox> letterBoxes = [];
-  bool isSDragged = false;
-
+  
   @override
   void initState() {
     super.initState();
 
     const letters = ['BHEEM', 'ARJUN', 'KRISHNA', 'BHEESMA', 'KARNA', 'DURYODHAN'];
-
     int maxLength = letters.map((e) => e.length).reduce((a, b) => a > b ? a : b);
 
     letterBoxes = List.generate(letters.length, (index) {
@@ -95,18 +93,14 @@ class _DraggableScreenState extends State<DraggableScreen> {
                         color: Colors.grey,
                       ),
                       onDragStarted: () {
-                        if (box.letter == 'BHEESMA') {
-                          setState(() {
-                            isSDragged = true;
-                          });
-                        }
+                        setState(() {
+                          box.isBeingDragged = true;
+                        });
                       },
                       onDragEnd: (_) {
-                        if (box.letter == 'BHEESMA') {
-                          setState(() {
-                            isSDragged = false;
-                          });
-                        }
+                        setState(() {
+                          box.isBeingDragged = false;
+                        });
                       },
                       child: Container(
                         width: box.width,
@@ -128,27 +122,7 @@ class _DraggableScreenState extends State<DraggableScreen> {
                   );
                 }).toList(),
 
-                if (isSDragged)
-                  Positioned(
-                    top: letterBoxes[3].position.dy,
-                    left: letterBoxes[3].position.dx,
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => NotesScreen()), // Navigate to NotesScreen
-                        );
-                      },
-                      child: Text(
-                        'b',
-                        style: TextStyle(
-                          fontSize: 30,
-                          color: Color.fromARGB(255, 83, 2, 86),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
+                ..._buildSingleLetterButtons(),
               ],
             ),
           ),
@@ -164,6 +138,50 @@ class _DraggableScreenState extends State<DraggableScreen> {
       ),
     );
   }
+
+  List<Widget> _buildSingleLetterButtons() {
+    // Map each character to its corresponding word
+    const letterMap = {
+      'H': 'BHEEM',
+      'R': 'ARJUN',
+      'I': 'KRISHNA',
+      'B': 'BHEESMA',
+      'N': 'KARNA',
+      'U': 'DURYODHAN',
+    };
+
+    // Generate TextButtons for each box being dragged
+    return letterBoxes.where((box) => box.isBeingDragged).map((box) {
+      final singleLetter = letterMap.keys.firstWhere((key) => letterMap[key] == box.letter, orElse: () => '');
+
+      if (singleLetter.isNotEmpty) {
+        return Positioned(
+          top: box.position.dy,
+          left: box.position.dx,
+          child: TextButton(
+            onPressed: () {
+              if (singleLetter == 'B') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NotesScreen()),
+                );
+              }
+            },
+            child: Text(
+              singleLetter,
+              style: TextStyle(
+                fontSize: 30,
+                color: Color.fromARGB(255, 83, 2, 86),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        );
+      } else {
+        return SizedBox.shrink();
+      }
+    }).toList();
+  }
 }
 
 class LetterBox {
@@ -171,6 +189,7 @@ class LetterBox {
   final String letter;
   final bool isKey;
   final double width;
+  bool isBeingDragged = false;  // Track dragging state
   Offset position;
 
   LetterBox({
