@@ -1,3 +1,4 @@
+import 'package:chakravyuh/screens/end_screen.dart';
 import 'package:chakravyuh/screens/image_screen.dart';
 import 'package:chakravyuh/widgets/next_button.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,7 @@ class NotesScreen extends StatelessWidget {
             // Next Button to proceed
             NextButton(
                 nextScreen:
-                    ImageGridScreen()), // Assuming the NextScreen is the next step in the app
+                    EndScreen()), // Assuming the NextScreen is the next step in the app
           ],
         ),
       ),

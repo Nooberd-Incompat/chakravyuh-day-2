@@ -158,7 +158,7 @@ class _DraggableScreenState extends State<DraggableScreen> {
       'H': 'BHEEM',
       'R': 'ARJUN',
       'I': 'KRISHNA',
-      'B': 'BHEESMA',
+      'K': 'BHEESMA',
       'N': 'KARNA',
       'U': 'DURYODHAN',
     };

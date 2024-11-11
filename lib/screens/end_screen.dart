@@ -10,28 +10,32 @@ class EndScreen extends StatefulWidget {
 }
 
 String shiftStringByK(String input, int k) {
-  return input.split('').map((char) {
-    if (char.contains(RegExp(r'[a-zA-Z]'))) {
-      int code = char.codeUnitAt(0);
+  return input
+      .split('')
+      .map((char) {
+        if (char.contains(RegExp(r'[a-zA-Z]'))) {
+          int code = char.codeUnitAt(0);
 
-      // Shift uppercase letters (A-Z)
-      if (code >= 65 && code <= 90) {
-        return String.fromCharCode(65 + (code - 65 + k) % 26);
-      }
-      // Shift lowercase letters (a-z)
-      else if (code >= 97 && code <= 122) {
-        return String.fromCharCode(97 + (code - 97 + k) % 26);
-      }
-    }
-    // Non-alphabetic characters remain unchanged
-    return char;
-  }).join('');
+          // Shift uppercase letters (A-Z)
+          if (code >= 65 && code <= 90) {
+            return String.fromCharCode(65 + (code - 65 + k) % 26);
+          }
+          // Shift lowercase letters (a-z)
+          else if (code >= 97 && code <= 122) {
+            return String.fromCharCode(97 + (code - 97 + k) % 26);
+          }
+        }
+        // Non-alphabetic characters remain unchanged
+        return char;
+      })
+      .join('')
+      .toLowerCase();
 }
 
 class _EndScreenState extends State<EndScreen> {
   final TextEditingController _keyController = TextEditingController();
-  // final String correctKey = shiftStringByK("cbbkeilf", n!);
-  final String correctKey = shiftStringByK("abcd", n!); //TODO: this is just for testing, please do change this before production
+  final String correctKey = shiftStringByK("cbbkejlf",
+      n!);
   String? feedbackMessage;
 
   @override
@@ -65,6 +69,7 @@ class _EndScreenState extends State<EndScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(correctKey);
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
