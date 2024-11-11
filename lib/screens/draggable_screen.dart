@@ -200,20 +200,3 @@ class LetterBox {
     Offset? position,
   }) : position = position ?? Offset(100.0, 100.0);
 }
-
-class LetterBox {
-  final int id;
-  final String letter;
-  final bool isKey;
-  final double width;
-  bool isBeingDragged = false;  // Track dragging state
-  Offset position;
-
-  LetterBox({
-    required this.id,
-    required this.letter,
-    required this.isKey,
-    required this.width,
-    Offset? position,
-  }) : position = position ?? Offset(100.0, 100.0);
-}
