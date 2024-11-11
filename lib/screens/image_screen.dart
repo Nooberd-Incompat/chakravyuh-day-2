@@ -1,200 +1,253 @@
 import 'package:flutter/material.dart';
 
 class ImageGridScreen extends StatefulWidget {
-  const ImageGridScreen({super.key, required this.title});
-  final String title;
+  const ImageGridScreen({super.key});
 
   @override
   _ImageGridScreenState createState() => _ImageGridScreenState();
 }
 
 class _ImageGridScreenState extends State<ImageGridScreen> {
-  // List of images and corresponding text messages
   final List<Map<String, String>> imageData = [
-    {"image": "assets/images/abhimanyu.jpg", "text": "This is image 1"},
-    {"image": "assets/images/arjun.jpeg", "text": "This is image 2"},
-    {"image": "assets/images/bheem.jpg", "text": "This is image 3"},
-    {"image": "assets/images/bhishma.jpg", "text": "This is image 4"},
-    {"image": "assets/images/draupadi.jpg", "text": "This is image 5"},
-    {"image": "assets/images/dronacharya.jpg", "text": "This is image 6"},
-    {"image": "assets/images/duryodhan.jpg", "text": "13BS6"}, // Image 7
-    {"image": "assets/images/dusanan.jpg", "text": "This is image 8"},
-    {"image": "assets/images/karna.jpeg", "text": "This is image 9"},
-    {"image": "assets/images/krishna.jpg", "text": "This is image 10"},
-    {"image": "assets/images/kunti.png", "text": "This is image 11"},
-    {"image": "assets/images/shakuni.jpg", "text": "This is image 12"},
+    {
+      "image": "assets/images/abhimanyu.jpg",
+      "text":
+          "Abhimanyu, the son of Arjuna and Subhadra, learned the intricacies of the Chakravyuha (a complex battle formation) while still in his mother's womb. However, he only learned how to enter it, not exit, which led to his heroic but tragic end."
+    },
+    {
+      "image": "assets/images/arjun.jpeg",
+      "text":
+          "Arjuna was the most skilled archer among the Pandavas and the favorite student of Dronacharya. He was granted divine weapons by various gods, including the Pashupatastra from Lord Shiva. His focus and dedication are legendary, especially highlighted in the story of shooting the bird's eye during his training."
+    },
+    {
+      "image": "assets/images/bheem.jpg",
+      "text":
+          "Bheema was a voracious eater and famously defeated many Rakshasas, including the demon Hidimba, whom he later married. Bheema's strength was instrumental in defeating the Kauravas' key warriors, including Duryodhana, in the final mace duel."
+    },
+    {
+      "image": "assets/images/bhishma.jpg",
+      "text":
+          " Bheeshma took a vow of celibacy, renouncing his claim to the throne, to ensure his father's happiness. His loyalty was unshakable, and he possessed the Ichha Mrityu boon, which allowed him to choose the time of his death, granted to him by his father, King Shantanu."
+    },
+    {
+      "image": "assets/images/draupadi.jpg",
+      "text":
+          "Draupadi was born from fire and known for her beauty and intelligence. She married all five Pandavas due to a boon given by Lord Shiva, but her love and loyalty were primarily directed towards Arjuna. Her humiliation in the Kaurava court after being disrobed by Dushasana became a key catalyst for the Mahabharata war."
+    },
+    {
+      "image": "assets/images/dronacharya.jpg",
+      "text":
+          "A highly skilled teacher and warrior, Drona taught both the Pandavas and Kauravas the art of warfare. Despite his affection for Arjuna, Drona sided with the Kauravas due to his loyalty to the throne of Hastinapura. His killing of unarmed soldiers and death by deceit reveal the complexities of his character."
+    },
+    {"image": "assets/images/duryodhan.jpg", "text": "L"}, // Image 7
+    {
+      "image": "assets/images/dusanan.jpg",
+      "text":
+          "Duryodhana's younger brother, Dushasana was known for his unwavering loyalty to him. He was the one who attempted to disrobe Draupadi in the Kaurava court, an act that incited the Pandavas' fury and intensified their desire for revenge. His brutal death at the hands of Bheema was a direct retribution for this deed."
+    },
+    {
+      "image": "assets/images/karna.jpeg",
+      "text":
+          "Born to Kunti and the sun god Surya, Karna was abandoned and later raised by a charioteer. His loyalty to Duryodhana, despite knowing the Pandavas were his brothers, showed his strong sense of friendship and gratitude. Known for his generosity and courage, Karna was hindered by curses that ultimately led to his downfall."
+    },
+    {
+      "image": "assets/images/krishna.jpg",
+      "text":
+          "The divine incarnation of Lord Vishnu, Krishna served as the charioteer and guide to Arjuna, imparting the Bhagavad Gita to him on the battlefield. Although he did not wield weapons in the war, his strategic counsel and divine insights were key to the Pandavas' victory."
+    },
+    {
+      "image": "assets/images/kunti.png",
+      "text":
+          "Mother to the Pandavas, Kunti received a boon to bear children with gods. Despite her hardships, she maintained her composure and ensured her sons remained united. Her decision to reveal Karna's identity only to Yudhishthira added another complex layer to the Mahabharata's family dynamics."
+    },
+    {
+      "image": "assets/images/shakuni.jpg",
+      "text":
+          "The crafty uncle of the Kauravas, Shakuni harbored a deep-seated grudge against the Kuru dynasty for the suffering of his family. Known for his cunning and strategic manipulation, he orchestrated the dice game that led to the Pandavas' exile and sowed seeds for the ultimate conflict."
+    },
   ];
 
-  // List to track opacity and tapped states of all images
-  List<double> _imageOpacity = List.generate(12, (_) => 1.0);
-  List<bool> tappedStates = List.generate(12, (_) => false);
-  double _imageSize = 200.0; // For image 7 shrinking
+  final List<double> _imageOpacity = List.generate(12, (_) => 1.0);
+  double _imageSize = 200.0; // Initial size for image 7
   bool _isTappedImage7 = false; // Track if image 7 is tapped
+  String? selectedText; // Track selected image text to display after tap
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, // 2 columns for the grid
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 5,
-          ),
-          itemCount: imageData.length,
-          itemBuilder: (context, index) {
-            final imageInfo = imageData[index];
-            
-            // Check if the tapped image is image 7
-            bool isSeventhImage = index == 6;
+      backgroundColor: Colors.black,
+      body: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                ),
+                itemCount: imageData.length,
+                itemBuilder: (context, index) {
+                  final imageInfo = imageData[index];
+                  bool isSeventhImage = index == 6;
 
-            return GestureDetector(
-              onTap: () {
-                // Apply opacity effect for all images
-                setState(() {
-                  _imageOpacity[index] = 0.3; // Reduce opacity on tap
-                  tappedStates[index] = true; // Mark image as tapped
-                });
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedText = imageInfo["text"];
+                        if (isSeventhImage) {
+                          _isTappedImage7 = true;
 
-                // Reset opacity after 0.2 seconds for all images except the 7th
-                Future.delayed(const Duration(milliseconds: 200), () {
-                  setState(() {
-                    if (!isSeventhImage) {
-                      _imageOpacity[index] = 1.0; // Restore opacity for other images
-                      tappedStates[index] = false; // Reset tapped state
-                    }
-                  });
-                });
-
-                if (isSeventhImage) {
-                  setState(() {
-                    _isTappedImage7 = true; // Image 7 is tapped, start shrinking
-                  });
-
-                  // Shrink the image size gradually
-                  Future.delayed(const Duration(milliseconds: 100), () {
-                    setState(() {
-                      _imageSize = 200.0; // Shrink the image 7
-                    });
-                  });
-
-                  Future.delayed(const Duration(milliseconds: 200), () {
-                    setState(() {
-                      _imageSize = 170.0; // Shrink the image 7
-                    });
-                  });
-
-                  Future.delayed(const Duration(milliseconds: 300), () {
-                    setState(() {
-                      _imageSize = 150.0; // Shrink the image 7 further
-                    });
-                  });
-
-                  Future.delayed(const Duration(milliseconds: 400), () {
-                    setState(() {
-                      _imageSize = 120.0; // Shrink the image 7 further
-                    });
-                  });
-
-                  Future.delayed(const Duration(milliseconds: 400), () {
-                    setState(() {
-                      _imageSize = 100.0; // Shrink the image 7 further
-                    });
-                  });
-                  Future.delayed(const Duration(milliseconds: 500), () {
-                    setState(() {
-                      _imageSize = 70.0; // Shrink the image 7
-                    });
-                  });
-
-                  Future.delayed(const Duration(milliseconds: 500), () {
-                    setState(() {
-                      _imageSize = 50.0; // Shrink the image 7 completely
-                    });
-                  });
-
-                  Future.delayed(const Duration(milliseconds: 500), () {
-                    setState(() {
-                      _imageSize = 30.0; // Shrink the image 7 completely
-                    });
-                  });
-
-                  Future.delayed(const Duration(milliseconds: 500), () {
-                    setState(() {
-                      _imageSize = 0.0; // Shrink the image 7 completely
-                    });
-                  });
-
-                  Future.delayed(const Duration(milliseconds: 600), () {
-                    setState(() {
-                      _imageSize = 300.0; // Shrink the image 7 completely
-                    });
-                  });
-
-
-
-                  // After image 7 shrinks completely, show the alphabet
-                  Future.delayed(const Duration(milliseconds: 600), () {
-                    setState(() {
-                      _isTappedImage7 = false; // Display the alphabet after shrinking
-                    });
-                  });
-                }
-              },
-              child: Stack(
-                alignment: Alignment.center, // Center the text on the image
-                children: [
-                  AnimatedSize(
-                    duration: const Duration(milliseconds: 300), // Animation duration
-                    curve: Curves.easeInOut,
-                    child: AnimatedOpacity(
-                      opacity: _imageOpacity[index], // Apply opacity change
-                      duration: const Duration(milliseconds: 300),
-                      child: Image.asset(
-                        imageInfo["image"]!,
-                        width: isSeventhImage ? _imageSize : 200.0, // Shrinking logic for image 7
-                        height: isSeventhImage ? _imageSize : 200.0, // Shrinking logic for image 7
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  // Display the text with background if tapped
-                  if (tappedStates[index] && index != 6)
-                    Container(
-                      color: Colors.black.withOpacity(0.5), // Background for text
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        imageInfo["text"]!,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  // Show the alphabet after shrinking for image 7
-                  if (isSeventhImage && _imageSize == 0.0)
-                    Container(
+                          // Shrinking animation sequence for image 7
+                          Future.delayed(const Duration(milliseconds: 100),
+                              () => setState(() => _imageSize = 170.0));
+                          Future.delayed(const Duration(milliseconds: 200),
+                              () => setState(() => _imageSize = 150.0));
+                          Future.delayed(const Duration(milliseconds: 300),
+                              () => setState(() => _imageSize = 120.0));
+                          Future.delayed(const Duration(milliseconds: 400),
+                              () => setState(() => _imageSize = 100.0));
+                          Future.delayed(const Duration(milliseconds: 500),
+                              () => setState(() => _imageSize = 50.0));
+                          Future.delayed(const Duration(milliseconds: 600), () {
+                            setState(() {
+                              _imageSize = 0.0; // Final shrink size
+                            });
+                          });
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ImageDetailScreen(
+                                imagePath: imageInfo["image"]!,
+                                description: imageInfo["text"]!,
+                                tag: 'image_$index',
+                              ),
+                            ),
+                          );
+                        }
+                      });
+                    },
+                    child: Stack(
                       alignment: Alignment.center,
-                      child: const Text(
-                        "b@1#", // Alphabet to show after image disappears
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
+                      children: [
+                        Hero(
+                          tag: 'image_$index',
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: AnimatedSize(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                              child: AnimatedOpacity(
+                                opacity: _imageOpacity[index],
+                                duration: const Duration(milliseconds: 300),
+                                child: Image.asset(
+                                  imageInfo["image"]!,
+                                  width: isSeventhImage ? _imageSize : 200.0,
+                                  height: isSeventhImage ? _imageSize : 200.0,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        if (isSeventhImage && _imageSize == 0.0)
+                          const Text(
+                            "L",
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                            ),
+                          ),
+                      ],
                     ),
-                ],
+                  );
+                },
               ),
-            );
-          },
-        ),
+            ),
+          ),
+          // Display the selected image's text below the grid when an image is tapped
+          if (selectedText != null)
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                selectedText!,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          // Single Next button at the bottom center
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                // Define action for "Next" button here
+              },
+              style: ElevatedButton.styleFrom(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+              child: const Text("Next"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ImageDetailScreen extends StatelessWidget {
+  final String imagePath;
+  final String description;
+  final String tag;
+
+  const ImageDetailScreen({
+    super.key,
+    required this.imagePath,
+    required this.description,
+    required this.tag,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Column(
+        children: [
+          Hero(
+            tag: tag,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15.0),
+              child: Image.asset(
+                imagePath,
+                width: double.infinity,
+                height: 400.0,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16.0),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              description,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
       ),
     );
   }

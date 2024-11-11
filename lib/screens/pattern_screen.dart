@@ -53,7 +53,8 @@ class _PatternLockScreenState extends State<PatternLockScreen> {
           const Padding(
             padding: EdgeInsets.all(20.0),
             child: Text(
-              "Choose the right pattern to proceed",
+              "\n\nThe common link amongst Gandeeva, Ekalavya and Vasudeva\n\nChoose the right pattern to proceed",
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
@@ -69,7 +70,7 @@ class _PatternLockScreenState extends State<PatternLockScreen> {
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 20,
               ),
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               itemCount: gridSize * gridSize,
               itemBuilder: (context, index) {
                 return GestureDetector(
@@ -97,7 +98,7 @@ class _PatternLockScreenState extends State<PatternLockScreen> {
                     );
                   }
                 : null,
-            child: Text("Next"),
+            child: const Text("Next"),
           ),
         ],
       ),

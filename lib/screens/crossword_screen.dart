@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:chakravyuh/screens/image_screen.dart';
-import 'package:chakravyuh/screens/draggable_screen.dart';
 import 'package:crossword/crossword.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +13,8 @@ class CrosswordPage extends StatefulWidget {
 class _CrosswordPageState extends State<CrosswordPage> {
   List<List<String>> letters = [];
   List<Color> lineColors = [];
-
+  List<int> letterGrid = [10, 10]; // Updated grid size to 10x10
+  GlobalKey<CrosswordState> crosswordState = GlobalKey<CrosswordState>();
   String word = "";
   bool isFirstWordGuessedCorrectly = false;
 
@@ -45,13 +45,15 @@ class _CrosswordPageState extends State<CrosswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // Hint Section
+              const Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: Column(
                   children: [
@@ -60,7 +62,7 @@ class _CrosswordPageState extends State<CrosswordPage> {
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -102,6 +104,7 @@ class _CrosswordPageState extends State<CrosswordPage> {
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -113,6 +116,9 @@ class _CrosswordPageState extends State<CrosswordPage> {
                     duration: Duration(milliseconds: 200),
                     onTouchLetterFontStyle: FontStyle.italic,
                   ),
+                  revealLetterDecoration:
+                      const RevealLetterDecoration(shakeOffset: Offset(10, 20)),
+                  key: crosswordState,
                   allowOverlap: false,
                   letters: const [
                     ["T", "H", "F", "P", "S", "M", "G", "Q", "A", "L"],
@@ -138,7 +144,7 @@ class _CrosswordPageState extends State<CrosswordPage> {
                   },
                   addIncorrectWord: true,
                   textStyle: const TextStyle(
-                    color: Color.fromARGB(255, 182, 134, 255),
+                    color: Color.fromARGB(255, 185, 51, 41),
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -162,22 +168,21 @@ class _CrosswordPageState extends State<CrosswordPage> {
               ),
               // Next Button Section (Visible from the start, but enabled only if the word is guessed correctly)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 50),
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 child: ElevatedButton(
                   onPressed: isFirstWordGuessedCorrectly
                       ? () {
                           // Navigate to ImageGridScreen
                           Navigator.push(
                             context,
+                            MaterialPageRoute(
+                                builder: (context) => const ImageGridScreen()),
                           );
                         }
                       : null, // Disabled initially until the word "KRISHNA" is guessed
                   child: const Text('Next'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8), 
-                    ),
+                    backgroundColor: Color.fromARGB(255, 255, 186, 96),
                   ),
                 ),
               ),

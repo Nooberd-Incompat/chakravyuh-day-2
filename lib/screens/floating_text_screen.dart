@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:chakravyuh/screens/draggable_screen.dart';
 import 'package:chakravyuh/screens/instruction_screen.dart';
 import 'package:chakravyuh/screens/pattern_screen.dart';
 import 'package:chakravyuh/screens/question_screen.dart';
@@ -265,13 +266,12 @@ class _FloatingTextScreenState extends State<FloatingTextScreen>
           ),
 
           // Next button on top layer
-          const Align(
+          Align(
             alignment: Alignment.bottomCenter, // Changed to bottomCenter
             child: Padding(
-              padding: EdgeInsets.only(bottom: 32.0), // Added bottom padding
-              child: NextButton(
-                  nextScreen:
-                      PatternLockScreen()), //TODO: Gotta change this to draggable screen
+              padding:
+                  const EdgeInsets.only(bottom: 32.0), // Added bottom padding
+              child: NextButton(nextScreen: DraggableScreen()),
             ),
           ),
         ],

@@ -72,15 +72,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 padding: const EdgeInsets.all(24.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'Question 1:',
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 246, 189, 115),
-                      ),
-                    ),
+                  children: [
                     SizedBox(height: 16),
                     Text(
                       'Who was the father of Bhishma, the mighty warrior who took the vow of celibacy and loyalty?',
