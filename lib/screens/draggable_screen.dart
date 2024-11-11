@@ -1,21 +1,32 @@
 import 'package:chakravyuh/screens/notes_screen.dart';
+import 'package:chakravyuh/screens/pattern_screen.dart';
 import 'package:chakravyuh/widgets/next_button.dart';
 import 'package:flutter/material.dart';
 
 class DraggableScreen extends StatefulWidget {
+  const DraggableScreen({super.key});
+
   @override
   _DraggableScreenState createState() => _DraggableScreenState();
 }
 
 class _DraggableScreenState extends State<DraggableScreen> {
   List<LetterBox> letterBoxes = [];
-  
+
   @override
   void initState() {
     super.initState();
 
-    const letters = ['BHEEM', 'ARJUN', 'KRISHNA', 'BHEESMA', 'KARNA', 'DURYODHAN'];
-    int maxLength = letters.map((e) => e.length).reduce((a, b) => a > b ? a : b);
+    const letters = [
+      'BHEEM',
+      'ARJUN',
+      'KRISHNA',
+      'BHEESMA',
+      'KARNA',
+      'DURYODHAN'
+    ];
+    int maxLength =
+        letters.map((e) => e.length).reduce((a, b) => a > b ? a : b);
 
     letterBoxes = List.generate(letters.length, (index) {
       return LetterBox(
@@ -33,7 +44,8 @@ class _DraggableScreenState extends State<DraggableScreen> {
     double boxHeight = 60.0;
     const double spacing = 10.0;
     int lettersPerRow = 1;
-    double totalWidth = (letterBoxes[0].width * lettersPerRow) + (spacing * (lettersPerRow - 1));
+    double totalWidth = (letterBoxes[0].width * lettersPerRow) +
+        (spacing * (lettersPerRow - 1));
     double xOffset = (screenWidth - totalWidth) / 2;
     double yOffset = 50.0;
 
@@ -47,10 +59,10 @@ class _DraggableScreenState extends State<DraggableScreen> {
       backgroundColor: Colors.black,
       body: Column(
         children: [
-          SizedBox(height: 100),
+          const SizedBox(height: 100),
 
-          Padding(
-            padding: const EdgeInsets.all(16.0),
+          const Padding(
+            padding: EdgeInsets.all(16.0),
             child: Text(
               'The one who stood still for his vow will guide you forward',
               style: TextStyle(
@@ -62,7 +74,7 @@ class _DraggableScreenState extends State<DraggableScreen> {
             ),
           ),
 
-          SizedBox(height: 50),
+          const SizedBox(height: 50),
 
           Expanded(
             child: Stack(
@@ -82,7 +94,8 @@ class _DraggableScreenState extends State<DraggableScreen> {
                           child: Center(
                             child: Text(
                               box.letter,
-                              style: TextStyle(fontSize: 20, color: Colors.white),
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.white),
                             ),
                           ),
                         ),
@@ -105,11 +118,12 @@ class _DraggableScreenState extends State<DraggableScreen> {
                       child: Container(
                         width: box.width,
                         height: boxHeight,
-                        color: Color.fromARGB(255, 86, 28, 145),
+                        color: const Color.fromARGB(255, 86, 28, 145),
                         child: Center(
                           child: Text(
                             box.letter,
-                            style: TextStyle(fontSize: 25, color: Colors.white),
+                            style: const TextStyle(
+                                fontSize: 25, color: Colors.white),
                           ),
                         ),
                       ),
@@ -121,18 +135,17 @@ class _DraggableScreenState extends State<DraggableScreen> {
                     ),
                   );
                 }).toList(),
-
                 ..._buildSingleLetterButtons(),
               ],
             ),
           ),
 
-          SizedBox(height: 20), // Add space for the button
+          const SizedBox(height: 20), // Add space for the button
 
           // Add the NextButton here
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: NextButton(nextScreen: NotesScreen()),  
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: NextButton(nextScreen: PatternLockScreen()),
           ),
         ],
       ),
@@ -152,7 +165,8 @@ class _DraggableScreenState extends State<DraggableScreen> {
 
     // Generate TextButtons for each box being dragged
     return letterBoxes.where((box) => box.isBeingDragged).map((box) {
-      final singleLetter = letterMap.keys.firstWhere((key) => letterMap[key] == box.letter, orElse: () => '');
+      final singleLetter = letterMap.keys
+          .firstWhere((key) => letterMap[key] == box.letter, orElse: () => '');
 
       if (singleLetter.isNotEmpty) {
         return Positioned(
@@ -169,7 +183,7 @@ class _DraggableScreenState extends State<DraggableScreen> {
             },
             child: Text(
               singleLetter,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 30,
                 color: Color.fromARGB(255, 83, 2, 86),
                 fontWeight: FontWeight.bold,
@@ -178,7 +192,7 @@ class _DraggableScreenState extends State<DraggableScreen> {
           ),
         );
       } else {
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       }
     }).toList();
   }
@@ -189,7 +203,7 @@ class LetterBox {
   final String letter;
   final bool isKey;
   final double width;
-  bool isBeingDragged = false;  // Track dragging state
+  bool isBeingDragged = false; // Track dragging state
   Offset position;
 
   LetterBox({
@@ -198,5 +212,5 @@ class LetterBox {
     required this.isKey,
     required this.width,
     Offset? position,
-  }) : position = position ?? Offset(100.0, 100.0);
+  }) : position = position ?? const Offset(100.0, 100.0);
 }

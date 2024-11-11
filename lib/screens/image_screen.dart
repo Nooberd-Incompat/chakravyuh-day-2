@@ -1,3 +1,5 @@
+import 'package:chakravyuh/screens/notes_screen.dart';
+import 'package:chakravyuh/widgets/next_button.dart';
 import 'package:flutter/material.dart';
 
 class ImageGridScreen extends StatefulWidget {
@@ -184,19 +186,7 @@ class _ImageGridScreenState extends State<ImageGridScreen> {
           // Single Next button at the bottom center
           Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                // Define action for "Next" button here
-              },
-              style: ElevatedButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-              ),
-              child: const Text("Next"),
-            ),
+            child: NextButton(nextScreen: NotesScreen()),
           ),
         ],
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:chakravyuh/screens/start_screen.dart';
-import 'package:csv/csv.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 
 int? n;
 
@@ -20,27 +20,23 @@ class _TeamIDState extends State<TeamID> {
   String teamID = '';
   Map<String, int> teamData = {};
 
-  @override
-  void initState() {
-    super.initState();
-    _loadCSVData();
-  }
+  int hashToInt1To26(String input) {
+    // Step 1: Create a SHA-256 hash of the input string
+    var bytes = utf8.encode(input); // Convert string to UTF-8 byte array
+    var hash = sha256.convert(bytes); // Hash the byte array using SHA-256
 
-  Future<void> _loadCSVData() async {
-    final csvData = await rootBundle.loadString('assets/teamId.csv');
-    List<List<dynamic>> rows = const CsvToListConverter().convert(csvData);
+    // Step 2: Convert the hash to an integer
+    var hashInt =
+        hash.bytes.fold<int>(0, (previous, element) => previous + element);
 
-    for (var i = 1; i < rows.length; i++) {
-      String teamId = rows[i][0];
-      int value = rows[i][1];
-      teamData[teamId] = value;
-    }
+    // Step 3: Map the integer to a range between 1 and 26
+    return (hashInt % 26) + 1;
   }
 
   void _updateTeamID(String value) {
     setState(() {
       teamID = value;
-      n = teamData[teamID];
+      n = hashToInt1To26(teamID);
     });
   }
 
@@ -96,9 +92,6 @@ class _TeamIDState extends State<TeamID> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your Team ID';
-                    }
-                    if (!teamData.containsKey(value)) {
-                      return 'Invalid Team ID';
                     }
                     return null;
                   },
