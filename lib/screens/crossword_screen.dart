@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:chakravyuh/screens/image_screen.dart';
-import 'package:chakravyuh/screens/draggable_screen.dart';
 import 'package:crossword/crossword.dart';
 import 'package:flutter/material.dart';
 
@@ -60,7 +59,7 @@ class _CrosswordPageState extends State<CrosswordPage> {
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -138,7 +137,7 @@ class _CrosswordPageState extends State<CrosswordPage> {
                   },
                   addIncorrectWord: true,
                   textStyle: const TextStyle(
-                    color: Color.fromARGB(255, 182, 134, 255),
+                    color: Color.fromARGB(255, 185, 51, 41),
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -162,7 +161,7 @@ class _CrosswordPageState extends State<CrosswordPage> {
               ),
               // Next Button Section (Visible from the start, but enabled only if the word is guessed correctly)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 50),
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 child: ElevatedButton(
                   onPressed: isFirstWordGuessedCorrectly
                       ? () {
@@ -174,10 +173,7 @@ class _CrosswordPageState extends State<CrosswordPage> {
                       : null, // Disabled initially until the word "KRISHNA" is guessed
                   child: const Text('Next'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8), 
-                    ),
+                    backgroundColor: Color.fromARGB(255, 255, 186, 96),
                   ),
                 ),
               ),
