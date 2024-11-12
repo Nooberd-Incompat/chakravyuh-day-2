@@ -15,16 +15,19 @@ class StartScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Chakravyuh',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-              textAlign: TextAlign.center,
+            Image.asset(
+              'assets/images/GDGxIOTA.png',
+              width: 600.0,
+              height: 120.0,
+              fit: BoxFit.cover,
             ),
-            const SizedBox(height: 20),
+            Image.asset(
+              'assets/images/Chakravyuh.png',
+              width: 300.0,
+              height: 120.0,
+              fit: BoxFit.cover,
+            ),
+            const SizedBox(height: 40),
 
             // Display dynamic +n
             Text(
